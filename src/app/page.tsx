@@ -28,12 +28,12 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const SUBJECTS = [
-  { name: "Maths", note: "Concepts, practice & problem solving" },
-  { name: "Science", note: "Physics, Chemistry and Biology basics" },
-  { name: "English", note: "Grammar, reading and writing skills" },
-  { name: "Hindi", note: "व्याकरण, पठन और लेखन" },
-  { name: "Computer", note: "Digital literacy fundamentals" },
-  { name: "SST", note: "History, Civics, Geography & Economics" },
+  { name: "Maths", note: "Concepts, practice & problem solving", emoji: "🧮" },
+  { name: "Science", note: "Physics, Chemistry and Biology basics", emoji: "🔬" },
+  { name: "English", note: "Grammar, reading and writing skills", emoji: "📖" },
+  { name: "Hindi", note: "व्याकरण, पठन और लेखन", emoji: "✏️" },
+  { name: "Computer", note: "Digital literacy fundamentals", emoji: "💻" },
+  { name: "SST", note: "History, Civics, Geography & Economics", emoji: "🌍" },
 ];
 
 const STEPS = [
@@ -87,13 +87,32 @@ export default function HomePage() {
         />
         <Reveal>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {SUBJECTS.map((subject) => (
-              <li key={subject.name} className="glass lift rounded-2xl p-5">
-                <p className="flex items-center gap-2 font-semibold">
-                  <span className="h-2.5 w-2.5 rounded-full bg-brand-green" aria-hidden="true" />
+            {SUBJECTS.map((subject, index) => (
+              <li
+                key={subject.name}
+                className="glass lift relative overflow-hidden rounded-2xl p-5 pb-14"
+              >
+                {/* Soft brand-tinted blob behind the subject icon */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute -bottom-10 -right-8 h-28 w-32 rounded-[48%] ${
+                    index % 2 === 0 ? "bg-primary-soft" : "bg-secondary-soft"
+                  }`}
+                />
+                <p className="relative flex items-center gap-2 font-semibold">
+                  <span
+                    className="h-2.5 w-2.5 rounded-full bg-brand-green"
+                    aria-hidden="true"
+                  />
                   {subject.name}
                 </p>
-                <p className="mt-1 text-sm text-muted">{subject.note}</p>
+                <p className="relative mt-1 text-sm text-muted">{subject.note}</p>
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-3 right-5 text-4xl"
+                >
+                  {subject.emoji}
+                </span>
               </li>
             ))}
           </ul>

@@ -55,7 +55,7 @@ export async function HeroSection() {
   const settings = await getSiteSettings();
 
   return (
-    <section className="cinema relative overflow-hidden border-b border-border bg-surface">
+    <section className="cinema pattern-plus relative overflow-hidden border-b border-border bg-surface">
       {/* Cinematic backdrop: drifting brand-colour orbs + film grain */}
       <span
         aria-hidden="true"
@@ -94,16 +94,19 @@ export async function HeroSection() {
             </ButtonLink>
           </div>
 
-          <dl className="anim-up anim-up-5 mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-6 text-center">
+          <dl className="anim-up anim-up-5 mt-10 grid max-w-lg grid-cols-3 gap-3">
             {[
-              ["8, 9 & 10", "Classes covered"],
-              ["7+", "Subjects taught"],
-              ["Syllabus", "Aligned to school syllabus*"],
-            ].map(([value, label]) => (
-              <div key={label}>
-                <dt className="sr-only">{label}</dt>
-                <dd className="text-xl font-bold text-primary">{value}</dd>
-                <dd className="mt-0.5 text-xs text-muted">{label}</dd>
+              { value: "8, 9 & 10", label: "Classes covered", chip: "🎒", tint: "bg-primary-soft" },
+              { value: "7+", label: "Subjects taught", chip: "📚", tint: "bg-secondary-soft" },
+              { value: "Syllabus", label: "Aligned to school*", chip: "✅", tint: "bg-highlight" },
+            ].map((stat) => (
+              <div key={stat.label} className={`rounded-2xl p-4 text-center ${stat.tint}`}>
+                <span className="text-lg" aria-hidden="true">
+                  {stat.chip}
+                </span>
+                <dt className="sr-only">{stat.label}</dt>
+                <dd className="mt-1 text-lg font-extrabold text-text">{stat.value}</dd>
+                <dd className="mt-0.5 text-xs text-muted">{stat.label}</dd>
               </div>
             ))}
           </dl>

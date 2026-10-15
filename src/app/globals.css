@@ -357,6 +357,15 @@ summary::-webkit-details-marker {
   background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(2 6 16 / 0.35));
 }
 
+/* Playful plus-sign backdrop (kid-friendly texture, brand blue, very subtle) */
+.pattern-plus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%232F6BD8' stroke-width='2' stroke-linecap='round' opacity='0.07'/%3E%3C/svg%3E");
+  background-size: 36px 36px;
+}
+[data-theme="dark"] .pattern-plus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%236BA0F0' stroke-width='2' stroke-linecap='round' opacity='0.08'/%3E%3C/svg%3E");
+}
+
 /* Gentle colour washes for alternating sections (no text-contrast impact) */
 .wash {
   background:

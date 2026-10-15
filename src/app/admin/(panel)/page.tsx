@@ -98,14 +98,20 @@ export default async function AdminDashboard() {
     href?: string;
     tone?: "blue" | "green" | "warning";
   }> = [
-    { label: "Published posts", value: postsPublished, href: "/admin/posts" },
-    { label: "Draft posts", value: postsDraft, href: "/admin/posts" },
-    { label: "Published resources", value: resources, href: "/admin/resources" },
-    { label: "Draft resources", value: resourcesDraft, href: "/admin/resources" },
+    { label: "Published posts", value: postsPublished, href: "/admin/posts", tone: "green" },
+    { label: "Draft posts", value: postsDraft, href: "/admin/posts", tone: "blue" },
+    { label: "Published resources", value: resources, href: "/admin/resources", tone: "green" },
+    { label: "Draft resources", value: resourcesDraft, href: "/admin/resources", tone: "blue" },
     { label: "Unread messages", value: unreadMessages, href: "/admin/messages", tone: "warning" },
-    { label: "Published FAQs", value: faqs, href: "/admin/faqs" },
-    { label: "Live announcements", value: publishedAnnouncements, href: "/admin/announcements" },
+    { label: "Published FAQs", value: faqs, href: "/admin/faqs", tone: "blue" },
+    { label: "Live announcements", value: publishedAnnouncements, href: "/admin/announcements", tone: "green" },
   ];
+
+  const TILE_TONES: Record<string, { tint: string; chip: string }> = {
+    blue: { tint: "bg-primary-soft", chip: "📌" },
+    green: { tint: "bg-secondary-soft", chip: "🎉" },
+    warning: { tint: "bg-highlight", chip: "📬" },
+  };
 
   return (
     <div className="space-y-10">
@@ -130,9 +136,18 @@ export default async function AdminDashboard() {
         <SectionHeading id="metrics" title="Content metrics" level={3} />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metrics.map((metric) => {
+            const toneStyle = TILE_TONES[metric.tone ?? ""] ?? {
+              tint: "border border-border bg-card",
+              chip: "📝",
+            };
             const tile = (
-              <div className="rounded-xl border border-border bg-card p-5">
-                <p className="text-3xl font-extrabold text-primary">{metric.value}</p>
+              <div className={`rounded-2xl p-5 ${toneStyle.tint}`}>
+                <p className="text-3xl font-extrabold text-text">
+                  {metric.value}{" "}
+                  <span className="text-base" aria-hidden="true">
+                    {toneStyle.chip}
+                  </span>
+                </p>
                 <p className="mt-1 text-sm text-muted">{metric.label}</p>
               </div>
             );
