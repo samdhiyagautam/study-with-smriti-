@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/features" },
 };
 
+export const dynamic = "force-dynamic";
+
 const COMPATIBILITY = [
   ["Platform", "Android"],
   ["Available on", "Google Play Store"],

@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
 };
 
+export const dynamic = "force-dynamic";
+
 async function Faqs() {
   const faqs = await getFaqs();
 

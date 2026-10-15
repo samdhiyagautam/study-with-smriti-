@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
+export const dynamic = "force-dynamic";
+
 const MISSION = [
   {
     title: "Our purpose",

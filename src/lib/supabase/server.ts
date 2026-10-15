@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { createServerClient } from "@supabase/ssr";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { supabaseConfig } from "./config";
@@ -83,4 +84,16 @@ export async function requireAdmin(): Promise<AdminContext | null> {
     email: profile.email ?? user.email ?? "",
     role: profile.role,
   };
+}
+
+/**
+ * Page-level guard: verifies session + DB role, redirecting to login when
+ * access must be denied. Call at the top of every /admin page.
+ */
+export async function requireAdminOrRedirect(): Promise<AdminContext> {
+  const admin = await requireAdmin();
+  // `denied=1` also stops middleware from bouncing the session back to /admin
+  // (which would loop for signed-in non-admin accounts).
+  if (!admin) redirect("/admin/login?denied=1");
+  return admin;
 }

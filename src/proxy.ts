@@ -8,7 +8,7 @@ const LOGIN_PATH = "/admin/login";
  * Real authorization still happens in requireAdmin() and in database RLS —
  * middleware is only the first of three checks.
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
   const { pathname, search } = request.nextUrl;
@@ -59,7 +59,7 @@ export async function middleware(request: NextRequest) {
     return redirectWithCookies(`${LOGIN_PATH}?next=${encodeURIComponent(pathname + search)}`);
   }
 
-  if (user && isLogin) {
+  if (user && isLogin && !request.nextUrl.searchParams.has("denied")) {
     return redirectWithCookies("/admin");
   }
 

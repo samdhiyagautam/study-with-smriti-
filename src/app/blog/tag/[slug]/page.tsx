@@ -3,8 +3,6 @@ import { Suspense } from "react";
 import { BlogListing, BlogListingFallback } from "@/components/content/blog-listing";
 import { Breadcrumb, PageHeader } from "@/components/ui/layout-primitives";
 
-export const instant = false;
-
 export async function generateMetadata({
   params,
 }: {

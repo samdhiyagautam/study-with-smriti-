@@ -11,7 +11,6 @@ import { SITE } from "@/lib/site";
 
 /** Detail pages read the CMS on every request — published edits go live
  *  immediately, with no redeploy (Next 16 blocking routes). */
-export const instant = false;
 
 export async function generateMetadata({
   params,
@@ -20,7 +19,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const resource = await getResourceBySlug(slug);
-  if (!resource) return { title: "Resource not found" };
+  // Real HTTP 404 (see note in the blog detail page).
+  if (!resource) notFound();
 
   const title = resource.seoTitle || resource.title;
   const description =

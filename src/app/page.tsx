@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+// Home pulls live CMS content on every request — publishing in the admin
+// panel updates this page immediately, with no redeploy.
+export const dynamic = "force-dynamic";
+
 const SUBJECTS = [
   { name: "Maths", note: "Concepts, practice & problem solving" },
   { name: "Science", note: "Physics, Chemistry and Biology basics" },

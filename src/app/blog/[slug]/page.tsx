@@ -10,7 +10,6 @@ import { getPostBySlug, getRelatedPosts, getSiteSettings } from "@/lib/content/q
 import type { Post } from "@/lib/content/types";
 
 /** Fresh CMS content on every request; no redeploy needed after publishing. */
-export const instant = false;
 
 async function RelatedPosts({ post }: { post: Post }) {
   const related = await getRelatedPosts(post, 3);
@@ -39,7 +38,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) return { title: "Article not found" };
+  // Thrown during metadata generation so the response is a real HTTP 404
+  // (throwing after streaming starts would produce a soft 404 with status 200).
+  if (!post) notFound();
 
   const settings = await getSiteSettings();
   const title = post.seoTitle || post.title;

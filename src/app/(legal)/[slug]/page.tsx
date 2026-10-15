@@ -38,17 +38,14 @@ const TITLES: Record<LegalSlug, { title: string; description: string }> = {
   },
 };
 
-export const instant = false;
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  if (!(ALLOWED_SLUGS as readonly string[]).includes(slug)) {
-    return { title: "Page not found" };
-  }
+  // Unknown top-level paths must be genuine HTTP 404s, not soft-404 pages.
+  if (!(ALLOWED_SLUGS as readonly string[]).includes(slug)) notFound();
 
   const fallback = TITLES[slug as LegalSlug];
   const page = await getPageBySlug(slug);

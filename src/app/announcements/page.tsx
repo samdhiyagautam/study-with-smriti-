@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/announcements" },
 };
 
+export const dynamic = "force-dynamic";
+
 async function AnnouncementList() {
   const announcements = await getAnnouncements(30);
 
