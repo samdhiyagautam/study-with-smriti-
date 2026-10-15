@@ -15,11 +15,14 @@ function isActive(pathname: string, href: string): boolean {
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
 
-  // Close the mobile menu whenever navigation happens
-  useEffect(() => {
+  // Close the menu when navigation happens (state adjustment during render —
+  // avoids setState-inside-effect cascades)
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

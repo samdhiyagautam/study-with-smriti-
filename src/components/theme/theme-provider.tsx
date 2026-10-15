@@ -6,13 +6,15 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 export type ThemePreference = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
 
 const STORAGE_KEY = "sws-theme";
+const CHANGE_EVENT = "sws-theme-change";
+const MEDIA_QUERY = "(prefers-color-scheme: dark)";
 
 interface ThemeContextValue {
   preference: ThemePreference;
@@ -22,66 +24,72 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-function systemTheme(): ResolvedTheme {
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+/* --- store plumbing (no setState inside effects) ------------------------- */
+
+function subscribe(callback: () => void): () => void {
+  window.addEventListener(CHANGE_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(CHANGE_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
 }
 
-function readStoredPreference(): ThemePreference {
-  if (typeof window === "undefined") return "system";
+function readPreference(): ThemePreference {
   try {
     const value = window.localStorage.getItem(STORAGE_KEY);
     if (value === "light" || value === "dark" || value === "system") {
       return value;
     }
   } catch {
-    /* storage blocked — fall back to system */
+    /* storage blocked — use system */
   }
   return "system";
 }
 
-/**
- * Applies data-theme to <html>. The same logic runs in the inline script in
- * root layout before first paint, so there is no flash of the wrong theme.
- */
-export function applyTheme(preference: ThemePreference): ResolvedTheme {
-  const resolved: ResolvedTheme =
-    preference === "system" ? systemTheme() : preference;
+function serverPreference(): ThemePreference {
+  return "system";
+}
+
+function readSystemTheme(): ResolvedTheme {
+  return window.matchMedia(MEDIA_QUERY).matches ? "dark" : "light";
+}
+
+function serverSystemTheme(): ResolvedTheme {
+  return "light";
+}
+
+/** Side effect on <html> — mirrors the inline no-flash script. */
+function applyTheme(resolved: ResolvedTheme): void {
   document.documentElement.dataset.theme = resolved;
   document.documentElement.style.colorScheme = resolved;
-  return resolved;
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [preference, setPreferenceState] = useState<ThemePreference>("system");
-  const [resolved, setResolved] = useState<ResolvedTheme>("light");
+  const preference = useSyncExternalStore(
+    subscribe,
+    readPreference,
+    serverPreference,
+  );
+  const systemTheme = useSyncExternalStore(
+    subscribe,
+    readSystemTheme,
+    serverSystemTheme,
+  );
+  const resolved: ResolvedTheme =
+    preference === "system" ? systemTheme : preference;
 
-  // Hydrate from storage after mount (never during SSR → no mismatch)
   useEffect(() => {
-    const stored = readStoredPreference();
-    setPreferenceState(stored);
-    setResolved(applyTheme(stored));
-  }, []);
-
-  // Follow OS changes while preference is "system"
-  useEffect(() => {
-    if (preference !== "system") return;
-    const query = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => setResolved(applyTheme("system"));
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, [preference]);
+    applyTheme(resolved);
+  }, [resolved]);
 
   const setPreference = useCallback((value: ThemePreference) => {
-    setPreferenceState(value);
-    setResolved(applyTheme(value));
     try {
       window.localStorage.setItem(STORAGE_KEY, value);
     } catch {
-      /* ignore */
+      /* storage blocked — theme still applies for this session */
     }
+    window.dispatchEvent(new Event(CHANGE_EVENT));
   }, []);
 
   const value = useMemo(
