@@ -154,7 +154,7 @@ export default async function BlogPostPage({
         />
       ) : null}
 
-      <div className="mt-8">
+      <div className="glass-strong mt-8 rounded-2xl p-6 sm:p-8">
         <RichText html={post.content} />
       </div>
 

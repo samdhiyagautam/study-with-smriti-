@@ -1,5 +1,6 @@
 import { AnnouncementItem, CardGridSkeleton, ListSkeleton, PostCard, ResourceCard } from "@/components/content/cards";
 import { FaqList } from "@/components/content/faq-list";
+import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { EmptyState, SectionHeading } from "@/components/ui/layout-primitives";
 import { getAnnouncements, getFaqs, getPosts, getResources, getSiteSettings } from "@/lib/content/queries";
@@ -54,32 +55,46 @@ export async function HeroSection() {
   const settings = await getSiteSettings();
 
   return (
-    <section className="border-b border-border bg-surface">
+    <section className="cinema relative overflow-hidden border-b border-border bg-surface">
+      {/* Cinematic backdrop: drifting brand-colour orbs + film grain */}
+      <span
+        aria-hidden="true"
+        className="orb orb-a"
+        style={{ top: "-14%", left: "-10%", width: "36rem", height: "36rem" }}
+      />
+      <span
+        aria-hidden="true"
+        className="orb orb-b"
+        style={{ bottom: "-24%", right: "-8%", width: "32rem", height: "32rem" }}
+      />
+      <span aria-hidden="true" className="grain" />
+      <span aria-hidden="true" className="vignette" />
+
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center">
         <div>
-          <p className="mb-3 inline-flex items-center rounded-full border border-secondary/40 bg-secondary-soft px-3 py-1 text-xs font-semibold text-secondary-hover dark:border-brand-green/40 dark:text-brand-green">
+          <p className="anim-up mb-3 inline-flex items-center rounded-full border border-secondary/40 bg-secondary-soft px-3 py-1 text-xs font-semibold text-secondary-hover dark:border-brand-green/40 dark:text-brand-green">
             Online live classes · Classes 8, 9 &amp; 10
           </p>
-          <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
+          <h1 className="anim-up anim-up-1 text-gradient text-3xl font-extrabold leading-tight sm:text-5xl">
             {settings.siteName}
           </h1>
-          <p className="mt-2 text-xl text-muted sm:text-2xl" lang="hi">
+          <p className="anim-up anim-up-2 mt-2 text-xl font-semibold text-muted sm:text-2xl" lang="hi">
             {settings.tagline}
           </p>
-          <p className="mt-5 max-w-xl leading-relaxed text-muted sm:text-lg">
+          <p className="anim-up anim-up-3 mt-5 max-w-xl leading-relaxed text-muted sm:text-lg">
             Quality online live classes and learning resources for government
             school students — Maths, Science, English, Hindi, Computer, SST and
             more, taught in line with your school syllabus.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="anim-up anim-up-4 mt-8 flex flex-wrap items-center gap-3">
             <GooglePlayButton playUrl={settings.googlePlayUrl} />
             <ButtonLink href="/resources" variant="outline" size="lg">
               Explore learning resources
             </ButtonLink>
           </div>
 
-          <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-6 text-center">
+          <dl className="anim-up anim-up-5 mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-6 text-center">
             {[
               ["8, 9 & 10", "Classes covered"],
               ["7+", "Subjects taught"],
@@ -92,33 +107,37 @@ export async function HeroSection() {
               </div>
             ))}
           </dl>
-          <p className="mt-3 text-xs text-muted">
+          <p className="anim-up anim-up-5 mt-3 text-xs text-muted">
             *Content is designed to follow each school&apos;s syllabus.
             [PLACEHOLDER — owner to confirm before publishing]
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-md sm:p-8">
-          <h2 className="text-lg font-bold">What students get</h2>
-          <ul className="mt-4 space-y-3 text-sm">
-            {[
-              "Scheduled online live classes for Classes 8, 9 and 10",
-              "Subjects: Maths, Science, English, Hindi, Computer, SST and one foreign language",
-              "Study materials, notes and worksheets in the resource library",
-              "Exam preparation guidance and practice material",
-            ].map((item) => (
-              <li key={item} className="flex gap-3">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-secondary-soft text-xs font-bold text-secondary-hover dark:bg-secondary dark:text-secondary-fg" aria-hidden="true">
-                  ✓
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 border-t border-border pt-5">
-            <ButtonLink href="/features" variant="ghost" size="sm">
-              See all app features →
-            </ButtonLink>
+        <div className="anim-up anim-up-4">
+          <div className="anim-float">
+            <div className="glass rounded-2xl p-6 sm:p-8">
+              <h2 className="text-lg font-bold">What students get</h2>
+              <ul className="mt-4 space-y-3 text-sm">
+                {[
+                  "Scheduled online live classes for Classes 8, 9 and 10",
+                  "Subjects: Maths, Science, English, Hindi, Computer, SST and one foreign language",
+                  "Study materials, notes and worksheets in the resource library",
+                  "Exam preparation guidance and practice material",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-secondary-soft text-xs font-bold text-secondary-hover dark:bg-secondary dark:text-secondary-fg" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 border-t border-border pt-5">
+                <ButtonLink href="/features" variant="ghost" size="sm">
+                  See all app features →
+                </ButtonLink>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -131,28 +150,30 @@ export async function LatestPostsSection() {
 
   return (
     <section aria-labelledby="latest-posts" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <SectionHeading
-        id="latest-posts"
-        eyebrow="From the blog"
-        title="Latest articles & study advice"
-        action={
-          <ButtonLink href="/blog" variant="outline" size="sm">
-            View all articles
-          </ButtonLink>
-        }
-      />
-      {items.length === 0 ? (
-        <EmptyState
-          title="No articles published yet"
-          description="Articles you publish from the admin panel will appear here."
+      <Reveal>
+        <SectionHeading
+          id="latest-posts"
+          eyebrow="From the blog"
+          title="Latest articles & study advice"
+          action={
+            <ButtonLink href="/blog" variant="outline" size="sm">
+              View all articles
+            </ButtonLink>
+          }
         />
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      )}
+        {items.length === 0 ? (
+          <EmptyState
+            title="No articles published yet"
+            description="Articles you publish from the admin panel will appear here."
+          />
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
+      </Reveal>
     </section>
   );
 }
@@ -170,30 +191,32 @@ export async function LatestResourcesSection() {
   const { items } = await getResources({ page: 1, perPage: 3 });
 
   return (
-    <section aria-labelledby="latest-resources" className="border-y border-border bg-surface">
+    <section aria-labelledby="latest-resources" className="wash border-y border-border">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <SectionHeading
-          id="latest-resources"
-          eyebrow="Resource library"
-          title="Notes, worksheets & practice material"
-          action={
-            <ButtonLink href="/resources" variant="outline" size="sm">
-              Browse all resources
-            </ButtonLink>
-          }
-        />
-        {items.length === 0 ? (
-          <EmptyState
-            title="No resources published yet"
-            description="Study material you publish from the admin panel will appear here."
+        <Reveal>
+          <SectionHeading
+            id="latest-resources"
+            eyebrow="Resource library"
+            title="Notes, worksheets & practice material"
+            action={
+              <ButtonLink href="/resources" variant="outline" size="sm">
+                Browse all resources
+              </ButtonLink>
+            }
           />
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((resource) => (
-              <ResourceCard key={resource.slug} resource={resource} />
-            ))}
-          </div>
-        )}
+          {items.length === 0 ? (
+            <EmptyState
+              title="No resources published yet"
+              description="Study material you publish from the admin panel will appear here."
+            />
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {items.map((resource) => (
+                <ResourceCard key={resource.slug} resource={resource} />
+              ))}
+            </div>
+          )}
+        </Reveal>
       </div>
     </section>
   );
@@ -215,28 +238,30 @@ export async function AnnouncementsSection() {
 
   return (
     <section aria-labelledby="announcements" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <SectionHeading
-        id="announcements"
-        eyebrow="News"
-        title="Announcements & app updates"
-        action={
-          <ButtonLink href="/announcements" variant="outline" size="sm">
-            All announcements
-          </ButtonLink>
-        }
-      />
-      {announcements.length === 0 ? (
-        <EmptyState
-          title="No announcements right now"
-          description="App updates and notices published by the team will show up here."
+      <Reveal>
+        <SectionHeading
+          id="announcements"
+          eyebrow="News"
+          title="Announcements & app updates"
+          action={
+            <ButtonLink href="/announcements" variant="outline" size="sm">
+              All announcements
+            </ButtonLink>
+          }
         />
-      ) : (
-        <ul className="rounded-xl border border-border bg-card px-5 sm:px-6">
-          {announcements.map((announcement) => (
-            <AnnouncementItem key={announcement.id} announcement={announcement} />
-          ))}
-        </ul>
-      )}
+        {announcements.length === 0 ? (
+          <EmptyState
+            title="No announcements right now"
+            description="App updates and notices published by the team will show up here."
+          />
+        ) : (
+          <ul className="glass rounded-2xl px-5 sm:px-6">
+            {announcements.map((announcement) => (
+              <AnnouncementItem key={announcement.id} announcement={announcement} />
+            ))}
+          </ul>
+        )}
+      </Reveal>
     </section>
   );
 }
@@ -254,20 +279,22 @@ export async function FaqSection() {
   const faqs = await getFaqs();
 
   return (
-    <section aria-labelledby="faq-heading" className="border-t border-border bg-surface">
+    <section aria-labelledby="faq-heading" className="wash border-t border-border">
       <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-        <SectionHeading
-          id="faq-heading"
-          eyebrow="Help"
-          title="Frequently asked questions"
-          description="Answers about the app, classes, downloads and support."
-          action={
-            <ButtonLink href="/faq" variant="outline" size="sm">
-              All FAQs
-            </ButtonLink>
-          }
-        />
-        <FaqList faqs={faqs} />
+        <Reveal>
+          <SectionHeading
+            id="faq-heading"
+            eyebrow="Help"
+            title="Frequently asked questions"
+            description="Answers about the app, classes, downloads and support."
+            action={
+              <ButtonLink href="/faq" variant="outline" size="sm">
+                All FAQs
+              </ButtonLink>
+            }
+          />
+          <FaqList faqs={faqs} />
+        </Reveal>
       </div>
     </section>
   );
@@ -289,35 +316,47 @@ export async function ContactCtaSection() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <div className="rounded-2xl border border-border bg-primary-soft px-6 py-10 text-center sm:px-10">
-        <h2 className="text-2xl font-bold sm:text-3xl">Need help or want to partner with us?</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-muted">
-          Questions about classes, the app or learning resources? Reach the team
-          directly — we usually reply within a few working days.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <ButtonLink href="/contact" size="lg">
-            Contact &amp; support
-          </ButtonLink>
-          <a
-            href={`mailto:${settings.contactEmail}`}
-            className={buttonClasses("outline", "lg")}
-          >
-            {settings.contactEmail}
-          </a>
+      <Reveal>
+        <div className="cinema lift relative overflow-hidden rounded-2xl border border-primary/20 bg-primary-soft px-6 py-10 text-center sm:px-10">
+          <span
+            aria-hidden="true"
+            className="orb orb-a"
+            style={{ top: "-40%", right: "-12%", width: "24rem", height: "24rem" }}
+          />
+          <span
+            aria-hidden="true"
+            className="orb orb-b"
+            style={{ bottom: "-45%", left: "-10%", width: "22rem", height: "22rem" }}
+          />
+          <h2 className="text-2xl font-bold sm:text-3xl">Need help or want to partner with us?</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted">
+            Questions about classes, the app or learning resources? Reach the team
+            directly — we usually reply within a few working days.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <ButtonLink href="/contact" size="lg">
+              Contact &amp; support
+            </ButtonLink>
+            <a
+              href={`mailto:${settings.contactEmail}`}
+              className={buttonClasses("outline", "lg")}
+            >
+              {settings.contactEmail}
+            </a>
+          </div>
+          <p className="mt-4 text-sm text-muted">
+            Phone:{" "}
+            {settings.contactPhones.map((phone, index) => (
+              <span key={phone}>
+                {index > 0 ? " · " : ""}
+                <a href={`tel:+91${phone}`} className="text-primary underline underline-offset-2">
+                  {phone}
+                </a>
+              </span>
+            ))}
+          </p>
         </div>
-        <p className="mt-4 text-sm text-muted">
-          Phone:{" "}
-          {settings.contactPhones.map((phone, index) => (
-            <span key={phone}>
-              {index > 0 ? " · " : ""}
-              <a href={`tel:+91${phone}`} className="text-primary underline underline-offset-2">
-                {phone}
-              </a>
-            </span>
-          ))}
-        </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

@@ -272,3 +272,253 @@ summary::-webkit-details-marker {
   height: 0;
   pointer-events: none;
 }
+
+/* ===========================================================================
+   Glassmorphism + cinematic layer (additive — token colors stay identical,
+   so every WCAG contrast test above still holds).
+   =========================================================================== */
+
+/* Frosted panels. Solid fallback where backdrop-filter is unsupported. */
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  box-shadow: var(--shadow-md);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--card);
+  }
+}
+[data-theme="dark"] .glass {
+  background: rgb(22 33 58 / 0.66);
+  border-color: rgb(148 163 184 / 0.16);
+}
+
+/* Sticky header glass — slightly stronger so nav stays readable over content */
+.glass-header {
+  background: rgb(255 255 255 / 0.78);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgb(15 23 42 / 0.07);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.5) inset;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-header {
+    background: var(--bg);
+  }
+}
+[data-theme="dark"] .glass-header {
+  background: rgb(15 23 42 / 0.74);
+  border-bottom-color: rgb(148 163 184 / 0.14);
+}
+
+/* Cinematic section backdrop: drifting colour orbs + film grain + vignette */
+.cinema {
+  position: relative;
+  isolation: isolate;
+}
+.cinema > .orb {
+  position: absolute;
+  z-index: -2;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.cinema > .orb-a {
+  background: radial-gradient(circle, rgb(47 107 216 / 0.5), transparent 65%);
+  animation: orb-drift 19s ease-in-out infinite alternate;
+}
+.cinema > .orb-b {
+  background: radial-gradient(circle, rgb(139 197 63 / 0.42), transparent 65%);
+  animation: orb-drift 24s ease-in-out infinite alternate-reverse;
+}
+[data-theme="dark"] .cinema > .orb {
+  opacity: 0.4;
+}
+.cinema > .grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+.cinema > .vignette {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(15 23 42 / 0.09));
+}
+[data-theme="dark"] .cinema > .vignette {
+  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(2 6 16 / 0.35));
+}
+
+/* Gentle colour washes for alternating sections (no text-contrast impact) */
+.wash {
+  background:
+    radial-gradient(85% 60% at 88% 0%, rgb(47 107 216 / 0.07), transparent 60%),
+    radial-gradient(70% 55% at 0% 100%, rgb(55 130 26 / 0.06), transparent 55%),
+    var(--surface);
+}
+[data-theme="dark"] .wash {
+  background:
+    radial-gradient(85% 60% at 88% 0%, rgb(107 160 240 / 0.09), transparent 60%),
+    radial-gradient(70% 55% at 0% 100%, rgb(139 197 63 / 0.06), transparent 55%),
+    var(--surface);
+}
+
+/* Gradient display text (token colours only → AA on both themes) */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .text-gradient {
+    background: linear-gradient(100deg, var(--primary) 10%, var(--secondary) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Entrance animation (plays once on load; disabled under reduced motion) */
+@keyframes fade-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.anim-up {
+  animation: fade-up-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.anim-up-1 { animation-delay: 0.08s; }
+.anim-up-2 { animation-delay: 0.16s; }
+.anim-up-3 { animation-delay: 0.26s; }
+.anim-up-4 { animation-delay: 0.36s; }
+.anim-up-5 { animation-delay: 0.48s; }
+
+/* Gentle levitation for hero panels */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.anim-float {
+  animation: float-soft 7.5s ease-in-out infinite;
+}
+
+/* Scroll reveal — the hidden state is only ever applied by JS (see Reveal),
+   so content is visible with JS disabled or when IntersectionObserver is
+   unavailable. */
+.reveal-root {
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* Route-change page transition */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: page-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mobile menu open */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.menu-in {
+  animation: menu-in 0.25s ease both;
+}
+
+/* Soft glow behind primary actions (uses the primary token, so contrast of
+   text on the button itself is unchanged) */
+.glow {
+  box-shadow: 0 6px 24px -6px color-mix(in srgb, var(--primary) 55%, transparent);
+}
+
+/* Hover motion only for people who accept motion */
+@media (prefers-reduced-motion: no-preference) {
+  .lift {
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s ease,
+      border-color 0.35s ease;
+  }
+  .lift:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  }
+  .glow:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 32px -6px color-mix(in srgb, var(--primary) 65%, transparent);
+  }
+  .anim-float:hover {
+    animation-play-state: paused;
+  }
+  /* Polished theme switching: surfaces cross-fade, text stays crisp */
+  body {
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+  .glass,
+  .glass-header {
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease;
+  }
+  /* FAQ disclosure: answer fades in on open (close stays instant) */
+  details[open] .faq-answer {
+    animation: fade-up-in 0.35s ease both;
+  }
+}
+
+/* Low-power phones: keep the ambient tint, drop the continuous drift */
+@media (max-width: 640px) {
+  .cinema > .orb {
+    animation: none;
+    filter: blur(56px);
+  }
+}
+
+/* Stronger glass for long-form reading panels (more opaque = calmer) */
+.glass-strong {
+  background: rgb(255 255 255 / 0.9);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow: var(--shadow-sm);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-strong {
+    background: var(--card);
+  }
+}
+[data-theme="dark"] .glass-strong {
+  background: rgb(22 33 58 / 0.86);
+  border-color: rgb(148 163 184 / 0.16);
+}

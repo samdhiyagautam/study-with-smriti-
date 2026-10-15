@@ -27,7 +27,7 @@ async function AnnouncementList() {
   }
 
   return (
-    <ul className="rounded-xl border border-border bg-card px-5 sm:px-6">
+    <ul className="glass rounded-2xl px-5 sm:px-6">
       {announcements.map((announcement) => (
         <AnnouncementItem key={announcement.id} announcement={announcement} />
       ))}

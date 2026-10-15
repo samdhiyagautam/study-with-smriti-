@@ -5,13 +5,13 @@ type Variant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors disabled:pointer-events-none disabled:opacity-55 text-center";
+  "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-300 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-55 text-center";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-primary text-primary-fg hover:bg-primary-hover",
+  primary: "bg-primary text-primary-fg hover:bg-primary-hover glow",
   secondary: "bg-secondary text-secondary-fg hover:bg-secondary-hover",
   outline:
-    "border border-border-strong bg-transparent text-text hover:bg-surface",
+    "border border-border-strong bg-transparent text-text hover:border-primary/50 hover:bg-surface",
   ghost: "bg-transparent text-primary hover:bg-primary-soft",
   danger: "bg-error text-error-fg hover:opacity-90",
 };

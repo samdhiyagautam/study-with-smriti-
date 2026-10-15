@@ -5,7 +5,7 @@ import { FOOTER_LINKS, SITE } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-border bg-surface">
+    <footer className="wash mt-auto border-t border-border">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="inline-flex rounded-md bg-logo-bg px-1 py-0.5">

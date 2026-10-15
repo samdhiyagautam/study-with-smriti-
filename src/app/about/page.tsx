@@ -47,7 +47,7 @@ export default function AboutPage() {
         />
         <div className="grid gap-6 sm:grid-cols-3">
           {MISSION.map((item) => (
-            <div key={item.title} className="rounded-xl border border-border bg-card p-6">
+            <div key={item.title} className="glass lift rounded-2xl p-6">
               <h3 className="font-bold">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
             </div>

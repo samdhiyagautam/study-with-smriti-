@@ -34,7 +34,7 @@ export function SiteHeader() {
   const playReady = SITE.playUrl.length > 0;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur">
+    <header className="glass-header sticky top-0 z-40">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         {/* Logo — aspect ratio preserved (2450×407), never stretched */}
         <Link
@@ -125,12 +125,12 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        className="border-t border-border bg-bg lg:hidden"
-      >
+      {/* Mobile menu — animated open, removed from the DOM when closed */}
+      {open ? (
+        <div
+          id="mobile-menu"
+          className="glass-header menu-in border-t border-border lg:hidden"
+        >
         <nav aria-label="Mobile" className="mx-auto max-w-6xl px-4 py-3">
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
@@ -164,7 +164,8 @@ export function SiteHeader() {
             ) : null}
           </ul>
         </nav>
-      </div>
+        </div>
+      ) : null}
     </header>
   );
 }

@@ -14,6 +14,7 @@ import {
   LatestResourcesSection,
 } from "@/components/content/home-sections";
 import { SectionHeading } from "@/components/ui/layout-primitives";
+import { Reveal } from "@/components/motion/reveal";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -84,37 +85,41 @@ export default function HomePage() {
           title="What we teach"
           description="Subjects covered across Classes 8, 9 and 10 (the exact mix may vary by school)."
         />
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SUBJECTS.map((subject) => (
-            <li key={subject.name} className="rounded-xl border border-border bg-card p-5">
-              <p className="flex items-center gap-2 font-semibold">
-                <span className="h-2.5 w-2.5 rounded-full bg-brand-green" aria-hidden="true" />
-                {subject.name}
-              </p>
-              <p className="mt-1 text-sm text-muted">{subject.note}</p>
-            </li>
-          ))}
-        </ul>
+        <Reveal>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {SUBJECTS.map((subject) => (
+              <li key={subject.name} className="glass lift rounded-2xl p-5">
+                <p className="flex items-center gap-2 font-semibold">
+                  <span className="h-2.5 w-2.5 rounded-full bg-brand-green" aria-hidden="true" />
+                  {subject.name}
+                </p>
+                <p className="mt-1 text-sm text-muted">{subject.note}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </section>
 
       {/* How it works */}
-      <section aria-labelledby="how-heading" className="border-y border-border bg-surface">
+      <section aria-labelledby="how-heading" className="wash border-y border-border">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <SectionHeading id="how-heading" eyebrow="How it works" title="Start learning in three steps" />
-          <ol className="grid gap-6 md:grid-cols-3">
-            {STEPS.map((step, index) => (
-              <li key={step.title} className="relative rounded-xl border border-border bg-card p-6">
-                <span
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-fg"
-                  aria-hidden="true"
-                >
-                  {index + 1}
-                </span>
-                <h3 className="mt-3 font-bold">{step.title}</h3>
-                <p className="mt-1.5 text-sm text-muted">{step.body}</p>
-              </li>
-            ))}
-          </ol>
+          <Reveal>
+            <ol className="grid gap-6 md:grid-cols-3">
+              {STEPS.map((step, index) => (
+                <li key={step.title} className="glass lift relative rounded-2xl p-6">
+                  <span
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-fg"
+                    aria-hidden="true"
+                  >
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-3 font-bold">{step.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </section>
 
@@ -125,14 +130,16 @@ export default function HomePage() {
           eyebrow="Why it helps"
           title="Built for students who need extra support"
         />
-        <div className="grid gap-6 sm:grid-cols-2">
-          {BENEFITS.map((benefit) => (
-            <div key={benefit.title} className="rounded-xl border border-border bg-card p-6">
-              <h3 className="font-bold">{benefit.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{benefit.body}</p>
-            </div>
-          ))}
-        </div>
+        <Reveal>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {BENEFITS.map((benefit) => (
+              <div key={benefit.title} className="glass lift rounded-2xl p-6">
+                <h3 className="font-bold">{benefit.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{benefit.body}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       <Suspense fallback={<LatestPostsFallback />}>
@@ -161,7 +168,8 @@ export default function HomePage() {
 /** Hero skeleton matching the real hero's footprint. */
 function HeroWithFallback() {
   return (
-    <section className="border-b border-border bg-surface">
+    <section className="cinema wash relative overflow-hidden border-b border-border">
+      <span aria-hidden="true" className="grain" />
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6" aria-hidden="true">
         <div className="h-4 w-52 animate-pulse rounded bg-border" />
         <div className="mt-5 h-12 w-3/4 animate-pulse rounded bg-border" />

@@ -12,7 +12,7 @@ export function Card({
 }) {
   return (
     <Tag
-      className={`rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md ${className}`}
+      className={`lift glass rounded-2xl p-5 ${className}`}
     >
       {children}
     </Tag>
@@ -86,12 +86,17 @@ export function PageHeader({
   breadcrumbs?: Array<{ label: string; href?: string }>;
 }) {
   return (
-    <div className="border-b border-border bg-surface">
+    <div className="cinema wash relative overflow-hidden border-b border-border">
+      <span
+        aria-hidden="true"
+        className="orb orb-a"
+        style={{ top: "-55%", right: "-6%", width: "26rem", height: "26rem" }}
+      />
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         {breadcrumbs ? <Breadcrumb items={breadcrumbs} /> : null}
-        <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{title}</h1>
+        <h1 className="anim-up mt-3 text-3xl font-bold sm:text-4xl">{title}</h1>
         {description ? (
-          <p className="mt-3 max-w-3xl text-muted sm:text-lg">{description}</p>
+          <p className="anim-up anim-up-1 mt-3 max-w-3xl text-muted sm:text-lg">{description}</p>
         ) : null}
       </div>
     </div>

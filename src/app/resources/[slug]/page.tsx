@@ -121,7 +121,7 @@ export default async function ResourceDetailPage({
         <RichText html={resource.content} />
       </div>
 
-      <div className="mt-10 rounded-xl border border-border bg-surface p-6">
+      <div className="glass-strong mt-10 rounded-2xl p-6">
         <h2 className="font-bold">Get this resource</h2>
         {fileUrl && resource.fileUrl ? (
           <a

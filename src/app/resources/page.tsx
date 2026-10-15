@@ -80,7 +80,7 @@ async function ResourceLibrary({
       <form
         method="get"
         action="/resources"
-        className="grid gap-4 rounded-xl border border-border bg-card p-4 sm:grid-cols-2 lg:grid-cols-4"
+        className="glass grid gap-4 rounded-2xl p-4 sm:grid-cols-2 lg:grid-cols-4"
       >
         <div className="lg:col-span-4">
           <label htmlFor="resource-search" className="block text-sm font-medium">

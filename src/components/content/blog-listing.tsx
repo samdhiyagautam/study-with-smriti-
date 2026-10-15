@@ -45,7 +45,7 @@ export async function BlogListing({
     <form
       method="get"
       action={basePath}
-      className="flex flex-wrap items-end gap-3 rounded-xl border border-border bg-card p-4"
+      className="glass flex flex-wrap items-end gap-3 rounded-2xl p-4"
     >
       {preset?.category ? <input type="hidden" name="category" value={preset.category} /> : null}
       {preset?.tag ? <input type="hidden" name="tag" value={preset.tag} /> : null}
@@ -65,7 +65,7 @@ export async function BlogListing({
       </div>
       <button
         type="submit"
-        className="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-fg hover:bg-primary-hover"
+        className="glow h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-fg transition-all duration-300 hover:bg-primary-hover active:scale-[0.98]"
       >
         Search
       </button>

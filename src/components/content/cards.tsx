@@ -20,7 +20,7 @@ export function PostCard({ post }: { post: PostSummary }) {
     <Card as="article" className="flex h-full flex-col">
       {post.featuredImageUrl ? (
         <Link href={`/blog/${post.slug}`} tabIndex={-1} aria-hidden="true">
-          <div className="relative -mx-5 -mt-5 mb-4 aspect-video overflow-hidden rounded-t-xl bg-surface">
+          <div className="relative -mx-5 -mt-5 mb-4 aspect-video overflow-hidden rounded-t-2xl bg-surface">
             <Image
               src={post.featuredImageUrl}
               alt={post.featuredImageAlt ?? ""}

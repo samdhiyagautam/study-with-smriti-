@@ -69,7 +69,7 @@ export default function FaqPage() {
           </Suspense>
         </div>
 
-        <div className="mt-12 rounded-xl border border-border bg-surface p-6 text-center">
+        <div className="glass lift mt-12 rounded-2xl p-6 text-center">
           <p className="font-semibold">Still have a question?</p>
           <p className="mt-1 text-sm text-muted">
             Our team can help with classes, downloads and study material.

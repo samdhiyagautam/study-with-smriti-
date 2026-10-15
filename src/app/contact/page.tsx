@@ -25,7 +25,7 @@ export default function ContactPage() {
         <div className="mt-8 grid gap-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <h2 className="text-xl font-bold">Send a message</h2>
-            <div className="mt-5 rounded-xl border border-border bg-card p-6">
+            <div className="glass-strong mt-5 rounded-2xl p-6">
               <ContactForm />
             </div>
           </div>
@@ -34,7 +34,7 @@ export default function ContactPage() {
             <h2 id="direct-contact" className="text-xl font-bold">
               Reach us directly
             </h2>
-            <ul className="mt-5 space-y-4 rounded-xl border border-border bg-surface p-6 text-sm">
+            <ul className="glass mt-5 space-y-4 rounded-2xl p-6 text-sm">
               <li>
                 <p className="font-semibold text-muted">Email</p>
                 <a
