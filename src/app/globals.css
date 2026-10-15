@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Study with Smriti — design tokens
+   Brand colors sampled directly from the supplied logo asset:
+     primary blue  #2F6BD8 (logo wordmark / "S" monogram, range #3976D7-#4986E7)
+     brand green   #8BC53F (logo swoosh band, range #79B629-#99D549)
+   Light / Dark are driven by <html data-theme="light|dark"> so the preference
+   survives reloads with no flash and never causes hydration mismatches.
+--------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+
+  /* backgrounds & text */
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #55637a;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* brand — blue */
+  --primary: #2f6bd8;
+  --primary-hover: #2559b8;
+  --primary-soft: #eaf1fd;
+  --primary-fg: #ffffff;
+
+  /* brand — green */
+  --brand-green: #8bc53f; /* sampled logo green (decorative) */
+  --secondary: #3e8e1f; /* accessible green for actions on light bg */
+  --secondary-hover: #357a1c;
+  --secondary-fg: #ffffff;
+  --secondary-soft: #eef8e3;
+
+  /* states */
+  --success: #16803c;
+  --warning: #a35a09;
+  --error: #d4343a;
+  --error-soft: #fdecec;
+
+  /* misc */
+  --focus: #2f6bd8;
+  --highlight: #fdf2c8;
+  --overlay: rgb(15 23 42 / 0.55);
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-md: 0 6px 24px -8px rgb(15 23 42 / 0.16);
+  --logo-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0f172a; /* deep slate, not pure black */
+  --surface: #141f36;
+  --card: #16213a;
+  --text: #e6ecf5;
+  --muted: #a3b0c4;
+  --border: #26344f;
+  --border-strong: #3a4a68;
+
+  --primary: #2f6bd8; /* buttons keep white text (AA in both themes) */
+  --primary-hover: #3d7ceb;
+  --primary-soft: #1a2b4d;
+  --primary-fg: #ffffff;
+
+  --brand-green: #a9db5f;
+  --secondary: #8bc53f; /* logo green with dark label = AA on dark bg */
+  --secondary-hover: #9bd456;
+  --secondary-fg: #101b06;
+  --secondary-soft: #1d2c12;
+
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --error-soft: #3a1c1f;
+
+  --focus: #8ab0f8;
+  --highlight: #3a3413;
+  --overlay: rgb(2 6 16 / 0.7);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 6px 24px -8px rgb(0 0 0 / 0.6);
+  --logo-bg: #f4f6fa; /* container keeps the original logo readable */
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-fg: var(--primary-fg);
+
+  --color-brand-green: var(--brand-green);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-fg: var(--secondary-fg);
+  --color-secondary-soft: var(--secondary-soft);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+
+  --color-focus: var(--focus);
+  --color-highlight: var(--highlight);
+  --color-overlay: var(--overlay);
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Noto Sans Devanagari",
+    "Mangal", sans-serif;
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Noto Sans Devanagari", "Mangal",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+/* Visible, consistent keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Rich-text (blog / resources / FAQ) content styles */
+.prose-sws {
+  line-height: 1.75;
+}
+.prose-sws h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+}
+.prose-sws h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose-sws p {
+  margin: 0.75rem 0;
+}
+.prose-sws ul,
+.prose-sws ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+.prose-sws ul {
+  list-style: disc;
+}
+.prose-sws ol {
+  list-style: decimal;
+}
+.prose-sws a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+[data-theme="dark"] .prose-sws a {
+  color: var(--focus);
+}
+.prose-sws img {
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  max-width: 100%;
+  height: auto;
+}
+.prose-sws blockquote {
+  border-left: 4px solid var(--brand-green);
+  padding-left: 1rem;
+  color: var(--muted);
+  margin: 1rem 0;
+}
+.prose-sws code {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.9em;
+}
