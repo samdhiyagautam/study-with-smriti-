@@ -153,6 +153,10 @@ body {
   color: var(--text);
 }
 
+summary::-webkit-details-marker {
+  display: none;
+}
+
 /* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {
   html {
