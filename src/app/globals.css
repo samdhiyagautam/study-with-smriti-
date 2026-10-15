@@ -226,3 +226,49 @@ summary::-webkit-details-marker {
   padding: 0.1rem 0.3rem;
   font-size: 0.9em;
 }
+.prose-sws pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.prose-sws pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.875em;
+}
+.prose-sws hr {
+  border: 0;
+  border-top: 2px solid var(--border);
+  margin: 1.5rem 0;
+}
+.prose-sws figure {
+  margin: 1rem 0;
+}
+.prose-sws figcaption {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-top: 0.35rem;
+}
+
+/* Admin rich-text editor (TipTap) — the attributes land on the editable
+   .ProseMirror element itself; focus outline comes from :focus-visible. */
+.sws-editor-content {
+  padding: 0.9rem 1rem;
+  min-height: 18rem;
+  outline-offset: -2px;
+}
+.sws-editor-content.ProseMirror p.is-empty::before,
+.sws-editor-content.ProseMirror h2.is-empty::before,
+.sws-editor-content.ProseMirror h3.is-empty::before,
+.sws-editor-content.ProseMirror h4.is-empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  opacity: 0.7;
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

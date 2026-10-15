@@ -249,7 +249,7 @@ interface ResourceRow {
   slug: string;
   title: string;
   description: string | null;
-  content: unknown;
+  body: unknown;
   subject: string | null;
   class_level: string | null;
   file_url: string | null;
@@ -266,7 +266,7 @@ function mapResourceRow(row: ResourceRow, withContent: boolean): Resource {
     slug: row.slug,
     title: row.title,
     description: row.description,
-    content: withContent ? htmlOf(row.content) : "",
+    content: withContent ? htmlOf(row.body) : "",
     category: row.category,
     subject: row.subject,
     classLevel: row.class_level,
@@ -361,7 +361,7 @@ export async function getResourceBySlug(slug: string): Promise<Resource | null> 
   const { data } = await supabase
     .from("resources")
     .select(
-      "slug, title, description, content, subject, class_level, file_url, file_type, published_at, seo_title, seo_description, view_count, category:resource_categories(name, slug)",
+      "slug, title, description, body, subject, class_level, file_url, file_type, published_at, seo_title, seo_description, view_count, category:resource_categories(name, slug)",
     )
     .eq("slug", slug)
     .eq("status", "published")
