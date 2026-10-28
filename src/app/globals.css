@@ -2,9 +2,10 @@
 
 /* ---------------------------------------------------------------------------
    Study with Smriti — design tokens
-   Brand colors sampled directly from the supplied logo asset:
-     primary blue  #2F6BD8 (logo wordmark / "S" monogram, range #3976D7-#4986E7)
-     brand green   #8BC53F (logo swoosh band, range #79B629-#99D549)
+   Palette (owner-selected, Litmus-Capital-inspired):
+     navy      #22305C (headers, primary actions on light, icon chips)
+     green     #46B45A / #2E7D32 (hero actions, accents) — logo's swoosh green
+     #8BC53F is kept as --brand-green (decorative, logo-faithful)
    Light / Dark are driven by <html data-theme="light|dark"> so the preference
    survives reloads with no flash and never causes hydration mismatches.
 --------------------------------------------------------------------------- */
@@ -16,25 +17,25 @@
 
   /* backgrounds & text */
   --bg: #ffffff;
-  --surface: #f8fafc;
+  --surface: #f7faf7;
   --card: #ffffff;
-  --text: #0f172a;
-  --muted: #55637a;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
+  --text: #101820;
+  --muted: #4c5a66;
+  --border: #e3e8e3;
+  --border-strong: #cbd5ce;
 
-  /* brand — blue */
-  --primary: #2f6bd8;
-  --primary-hover: #2559b8;
-  --primary-soft: #f1f6fd;
+  /* navy — primary actions on light background (Litmus navy header bar) */
+  --primary: #22305c;
+  --primary-hover: #1a2547;
+  --primary-soft: #edf1f9;
   --primary-fg: #ffffff;
 
-  /* brand — green */
+  /* green accents */
   --brand-green: #8bc53f; /* sampled logo green (decorative) */
-  --secondary: #37821a; /* accessible green for actions on light bg */
-  --secondary-hover: #2f7016;
+  --secondary: #2e7d32; /* accessible kelly green for actions on light bg */
+  --secondary-hover: #24682a;
   --secondary-fg: #ffffff;
-  --secondary-soft: #eef8e3;
+  --secondary-soft: #e9f5ea;
 
   /* states */
   --success: #16803c;
@@ -44,7 +45,7 @@
   --error-soft: #fdecec;
 
   /* misc */
-  --focus: #2f6bd8;
+  --focus: #22305c;
   --highlight: #fdf2c8;
   --overlay: rgb(15 23 42 / 0.55);
   --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
@@ -55,25 +56,26 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #0f172a; /* deep slate, not pure black */
-  --surface: #141f36;
-  --card: #16213a;
-  --text: #e6ecf5;
-  --muted: #a3b0c4;
-  --border: #26344f;
-  --border-strong: #3a4a68;
+  /* near-black charcoal with a hint of green (Litmus hero) */
+  --bg: #0a0c0a;
+  --surface: #101311;
+  --card: #141816;
+  --text: #f1f4f1;
+  --muted: #a5b0a8;
+  --border: #232a25;
+  --border-strong: #38403a;
 
-  /* Buttons stay AA: light blue surface with dark label in dark mode */
-  --primary: #6ba0f0;
-  --primary-hover: #85b0f7;
-  --primary-soft: #1c2f52;
-  --primary-fg: #0b1220;
+  /* Buttons stay AA: green surface with dark label in dark mode (Litmus hero CTA) */
+  --primary: #46b45a;
+  --primary-hover: #5ec272;
+  --primary-soft: #16223e;
+  --primary-fg: #07150c;
 
   --brand-green: #a9db5f;
-  --secondary: #8bc53f; /* logo green with dark label = AA on dark bg */
-  --secondary-hover: #9bd456;
-  --secondary-fg: #101b06;
-  --secondary-soft: #1d2c12;
+  --secondary: #7ed957; /* fresh green accent, AA on charcoal */
+  --secondary-hover: #90e06a;
+  --secondary-fg: #0a1f0e;
+  --secondary-soft: #152416;
 
   --success: #4ade80;
   --warning: #fbbf24;
@@ -81,9 +83,9 @@
   --error-fg: #2a0b0c;
   --error-soft: #3a1c1f;
 
-  --focus: #8ab0f8;
+  --focus: #9db9f0;
   --highlight: #3a3413;
-  --overlay: rgb(2 6 16 / 0.7);
+  --overlay: rgb(2 6 4 / 0.7);
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-md: 0 6px 24px -8px rgb(0 0 0 / 0.6);
   --logo-bg: #f4f6fa; /* container keeps the original logo readable */
@@ -334,15 +336,22 @@ summary::-webkit-details-marker {
   pointer-events: none;
 }
 .cinema > .orb-a {
-  background: radial-gradient(circle, rgb(47 107 216 / 0.5), transparent 65%);
+  background: radial-gradient(circle, rgb(34 48 92 / 0.55), transparent 65%);
   animation: orb-drift 19s ease-in-out infinite alternate;
 }
 .cinema > .orb-b {
-  background: radial-gradient(circle, rgb(139 197 63 / 0.42), transparent 65%);
+  background: radial-gradient(circle, rgb(70 180 90 / 0.45), transparent 65%);
   animation: orb-drift 24s ease-in-out infinite alternate-reverse;
 }
 [data-theme="dark"] .cinema > .orb {
   opacity: 0.4;
+}
+[data-theme="dark"] .cinema > .orb-a {
+  /* navy is near-invisible on charcoal — lift it to a periwinkle glow */
+  background: radial-gradient(circle, rgb(140 165 235 / 0.35), transparent 65%);
+}
+[data-theme="dark"] .cinema > .orb-b {
+  background: radial-gradient(circle, rgb(126 217 87 / 0.5), transparent 65%);
 }
 .cinema > .grain {
   position: absolute;
@@ -357,32 +366,32 @@ summary::-webkit-details-marker {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(15 23 42 / 0.09));
+  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(10 14 18 / 0.09));
 }
 [data-theme="dark"] .cinema > .vignette {
-  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(2 6 16 / 0.35));
+  background: radial-gradient(120% 85% at 50% 0%, transparent 52%, rgb(2 6 4 / 0.4));
 }
 
 /* Playful plus-sign backdrop (kid-friendly texture, brand blue, very subtle) */
 .pattern-plus {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%232F6BD8' stroke-width='2' stroke-linecap='round' opacity='0.07'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%2322305C' stroke-width='2' stroke-linecap='round' opacity='0.07'/%3E%3C/svg%3E");
   background-size: 36px 36px;
 }
 [data-theme="dark"] .pattern-plus {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%236BA0F0' stroke-width='2' stroke-linecap='round' opacity='0.08'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M18 13v10M13 18h10' stroke='%239DB9F0' stroke-width='2' stroke-linecap='round' opacity='0.08'/%3E%3C/svg%3E");
 }
 
 /* Gentle colour washes for alternating sections (no text-contrast impact) */
 .wash {
   background:
-    radial-gradient(85% 60% at 88% 0%, rgb(47 107 216 / 0.07), transparent 60%),
-    radial-gradient(70% 55% at 0% 100%, rgb(55 130 26 / 0.06), transparent 55%),
+    radial-gradient(85% 60% at 88% 0%, rgb(34 48 92 / 0.07), transparent 60%),
+    radial-gradient(70% 55% at 0% 100%, rgb(46 125 50 / 0.06), transparent 55%),
     var(--surface);
 }
 [data-theme="dark"] .wash {
   background:
-    radial-gradient(85% 60% at 88% 0%, rgb(107 160 240 / 0.09), transparent 60%),
-    radial-gradient(70% 55% at 0% 100%, rgb(139 197 63 / 0.06), transparent 55%),
+    radial-gradient(85% 60% at 88% 0%, rgb(140 165 235 / 0.09), transparent 60%),
+    radial-gradient(70% 55% at 0% 100%, rgb(126 217 87 / 0.07), transparent 55%),
     var(--surface);
 }
 
@@ -515,7 +524,7 @@ html.lenis body {
   height: 220px;
   z-index: -1;
   border-radius: 9999px;
-  background: radial-gradient(55% 90% at 50% 60%, rgb(139 197 63 / 0.22), transparent 72%);
+  background: radial-gradient(55% 90% at 50% 60%, rgb(70 180 90 / 0.25), transparent 72%);
   opacity: 0;
   pointer-events: none;
 }

@@ -24,7 +24,7 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #16295B 0%, #2F6BD8 58%, #2E7D0F 100%)",
+          background: "linear-gradient(135deg, #101311 0%, #22305C 48%, #2E7D32 100%)",
           color: "#ffffff",
           fontFamily: "sans-serif",
         }}
@@ -68,7 +68,7 @@ export default function OpenGraphImage() {
               fontSize: "76px",
               fontWeight: 800,
               lineHeight: 1.15,
-              color: "#CDE9A5",
+              color: "#A9DB5F",
             }}
           >
             Classes 8, 9 &amp; 10
