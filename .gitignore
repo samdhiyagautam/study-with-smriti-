@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local AI tooling (ECC agents/commands for OpenCode - not part of the site)
+/.opencode/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
