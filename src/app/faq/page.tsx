@@ -32,8 +32,25 @@ async function Faqs() {
     return accumulator;
   }, {});
 
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer.replace(/<[^>]*>/g, "").trim(),
+      },
+    })),
+  };
+
   return (
     <div className="space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       {Object.entries(grouped).map(([category, items]) => (
         <section key={category} aria-labelledby={`faq-${category}`}>
           <SectionHeading id={`faq-${category}`} title={category} level={3} />

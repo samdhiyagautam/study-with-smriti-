@@ -27,6 +27,48 @@ export const metadata: Metadata = {
 // panel updates this page immediately, with no redeploy.
 export const dynamic = "force-dynamic";
 
+/** Organization + WebSite structured data, built strictly from verified facts. */
+function HomeJsonLd() {
+  const base = SITE.url.replace(/\/+$/, "");
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${base}/#organization`,
+        name: SITE.name,
+        url: base,
+        logo: `${base}/logo/mark.png`,
+        email: SITE.email,
+        telephone: SITE.phones.map((phone) => `+91 ${phone}`),
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: SITE.address,
+          addressLocality: "Bokaro",
+          addressRegion: "Jharkhand",
+          addressCountry: "IN",
+        },
+        areaServed: "Bokaro, Jharkhand",
+        description: SITE.description,
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${base}/#website`,
+        name: SITE.name,
+        url: base,
+        inLanguage: "en-IN",
+        publisher: { "@id": `${base}/#organization` },
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+    />
+  );
+}
+
 const SUBJECTS = [
   { name: "Maths", note: "Concepts, practice & problem solving", emoji: "🧮" },
   { name: "Science", note: "Physics, Chemistry and Biology basics", emoji: "🔬" },
@@ -73,6 +115,7 @@ const BENEFITS = [
 export default function HomePage() {
   return (
     <>
+      <HomeJsonLd />
       <Suspense fallback={<HeroWithFallback />}>
         <HeroSection />
       </Suspense>
