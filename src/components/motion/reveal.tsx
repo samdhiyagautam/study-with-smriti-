@@ -14,9 +14,12 @@ import { useEffect, useRef, type ReactNode } from "react";
 export function Reveal({
   children,
   className = "",
+  variant = "up",
 }: {
   children: ReactNode;
   className?: string;
+  /** Hidden-state direction: up (default), left, right or scale. */
+  variant?: "up" | "left" | "right" | "scale";
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -29,13 +32,21 @@ export function Reveal({
     // visitor can already see.
     if (element.getBoundingClientRect().top < window.innerHeight * 0.12) return;
 
-    element.classList.add("reveal-pending");
+    const pendingClass =
+      variant === "left"
+        ? "reveal-pending-left"
+        : variant === "right"
+          ? "reveal-pending-right"
+          : variant === "scale"
+            ? "reveal-pending-scale"
+            : "reveal-pending";
+    element.classList.add(pendingClass);
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            element.classList.remove("reveal-pending");
+            element.classList.remove(pendingClass);
             observer.disconnect();
           }
         }
@@ -44,7 +55,7 @@ export function Reveal({
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [variant]);
 
   return (
     <div ref={ref} className={`reveal-root ${className}`}>

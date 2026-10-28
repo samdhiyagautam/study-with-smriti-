@@ -1,5 +1,6 @@
 import { AnnouncementItem, CardGridSkeleton, ListSkeleton, PostCard, ResourceCard } from "@/components/content/cards";
 import { FaqList } from "@/components/content/faq-list";
+import { Parallax } from "@/components/motion/parallax";
 import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { EmptyState, SectionHeading } from "@/components/ui/layout-primitives";
@@ -69,9 +70,11 @@ export async function HeroSection() {
       />
       <span aria-hidden="true" className="grain" />
       <span aria-hidden="true" className="vignette" />
+      <span aria-hidden="true" className="hero-floor" />
 
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center">
-        <div>
+        <Parallax fade speed={1}>
+          <div>
           <p className="anim-up mb-3 inline-flex items-center rounded-full border border-secondary/40 bg-secondary-soft px-3 py-1 text-xs font-semibold text-secondary-hover dark:border-brand-green/40 dark:text-brand-green">
             Online live classes · Classes 8, 9 &amp; 10
           </p>
@@ -114,9 +117,10 @@ export async function HeroSection() {
             *Content is designed to follow each school&apos;s syllabus.
             [PLACEHOLDER — owner to confirm before publishing]
           </p>
-        </div>
+          </div>
+        </Parallax>
 
-        <div className="anim-up anim-up-4">
+        <Parallax fade={false} speed={-0.35} className="anim-up anim-up-4">
           <div className="anim-float">
             <div className="glass rounded-2xl p-6 sm:p-8">
               <h2 className="text-lg font-bold">What students get</h2>
@@ -142,9 +146,40 @@ export async function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </Parallax>
       </div>
     </section>
+  );
+}
+
+/** Litmus-style infinite ticker — verified facts only, decorative (hidden from AT). */
+const MARQUEE_ITEMS = [
+  "Live online classes",
+  "Classes 8 · 9 · 10",
+  "Maths",
+  "Science",
+  "English",
+  "Hindi",
+  "Computer",
+  "SST",
+  "Bokaro, Jharkhand",
+];
+
+export function SubjectMarquee() {
+  return (
+    <div className="marquee border-b border-border bg-surface py-4" aria-hidden="true">
+      <div className="marquee-track">
+        {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, index) => (
+          <span
+            key={index}
+            className="flex items-center gap-3 whitespace-nowrap pr-3 text-sm font-semibold uppercase tracking-wide text-muted"
+          >
+            {item}
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-secondary dark:bg-brand-green" />
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 

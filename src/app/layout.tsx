@@ -3,6 +3,8 @@ import "./globals.css";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { PageTransition } from "@/components/motion/page-transition";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SITE } from "@/lib/site";
 
@@ -50,12 +52,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="flex min-h-screen flex-col">
         <ThemeProvider>
+          <SmoothScroll />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-fg"
           >
             Skip to main content
           </a>
+          <ScrollProgress />
           <SiteHeader />
           <main id="main-content" className="flex-1">
             <PageTransition>{children}</PageTransition>

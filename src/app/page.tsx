@@ -12,6 +12,7 @@ import {
   LatestPostsSection,
   LatestResourcesFallback,
   LatestResourcesSection,
+  SubjectMarquee,
 } from "@/components/content/home-sections";
 import { SectionHeading } from "@/components/ui/layout-primitives";
 import { Reveal } from "@/components/motion/reveal";
@@ -119,6 +120,8 @@ export default function HomePage() {
       <Suspense fallback={<HeroWithFallback />}>
         <HeroSection />
       </Suspense>
+
+      <SubjectMarquee />
 
       {/* Subjects — verified from project documents */}
       <section aria-labelledby="subjects-heading" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
