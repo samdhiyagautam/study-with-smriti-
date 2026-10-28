@@ -631,6 +631,54 @@ html.lenis body {
   }
 }
 [data-theme="dark"] .glass-strong {
-  background: rgb(22 33 58 / 0.86);
+  background: rgb(20 24 22 / 0.86);
   border-color: rgb(148 163 184 / 0.16);
+}
+
+/* ------------------------------ AI assistant ------------------------------ */
+
+.assistant-panel {
+  animation: panel-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: bottom right;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Chat messages (their own panel may exceed lenis scroll containment) */
+.assistant-msgs {
+  scrollbar-width: thin;
+}
+
+.assistant-typing {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  letter-spacing: 2px;
+  animation: typing-pulse 1s ease-in-out infinite;
+}
+
+@keyframes typing-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant-panel,
+  .assistant-typing {
+    animation: none !important;
+  }
 }

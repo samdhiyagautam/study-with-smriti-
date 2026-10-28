@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { PageTransition } from "@/components/motion/page-transition";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { AssistantWidget } from "@/components/assistant/assistant-widget";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { SITE } from "@/lib/site";
 
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <PageTransition>{children}</PageTransition>
           </main>
           <SiteFooter />
+          <AssistantWidget />
         </ThemeProvider>
       </body>
     </html>
