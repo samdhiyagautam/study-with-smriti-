@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact/contact-form";
-import { Breadcrumb, PageHeader } from "@/components/ui/layout-primitives";
+import { Breadcrumb, PageHeader, SectionHeading } from "@/components/ui/layout-primitives";
+import { buttonClasses } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
+
+/** Google Maps embed / directions built from the verified office address. */
+const centreQuery = encodeURIComponent(SITE.address);
+const MAP_EMBED_URL = `https://www.google.com/maps?q=${centreQuery}&output=embed`;
+const MAP_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${centreQuery}`;
+const MAP_OPEN_URL = `https://www.google.com/maps/search/?api=1&query=${centreQuery}`;
 
 export const metadata: Metadata = {
   title: "Contact & support",
@@ -86,6 +93,72 @@ export default function ContactPage() {
             </div>
           </aside>
         </div>
+
+        {/* Offline centre — verified address, map embed from that address text */}
+        <section aria-labelledby="visit-centre" className="mt-14">
+          <SectionHeading
+            id="visit-centre"
+            eyebrow="Offline centre"
+            title="Visit our centre in person"
+            description="Meet the team at our office. Please call ahead to fix a visit time — centre timings: [PLACEHOLDER — owner to confirm]."
+          />
+          <div className="grid gap-6 lg:grid-cols-5">
+            <div className="rounded-2xl border border-border bg-card p-1 lg:col-span-3">
+              <iframe
+                src={MAP_EMBED_URL}
+                title="Map — Study with Smriti office location"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="h-72 w-full rounded-xl sm:h-80"
+              />
+            </div>
+
+            <div className="glass rounded-2xl p-6 lg:col-span-2">
+              <p className="text-sm font-semibold uppercase tracking-wide text-secondary dark:text-brand-green">
+                Address
+              </p>
+              <p className="mt-2 leading-relaxed">{SITE.address}</p>
+              <p className="mt-2 text-sm text-muted">
+                3rd floor — ring the office bell on arrival.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a
+                  href={MAP_DIRECTIONS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClasses("primary", "md")}
+                >
+                  Get directions
+                </a>
+                <a
+                  href={MAP_OPEN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClasses("outline", "md")}
+                >
+                  Open in Google Maps
+                </a>
+              </div>
+
+              <div className="mt-6 border-t border-border pt-4 text-sm text-muted">
+                <p className="font-medium text-text">Call us before visiting</p>
+                <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
+                  {SITE.phones.map((phone) => (
+                    <a
+                      key={phone}
+                      href={`tel:+91${phone}`}
+                      className="font-medium text-primary underline underline-offset-2"
+                    >
+                      {phone}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );
