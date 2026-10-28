@@ -56,8 +56,8 @@ export function SiteHeader() {
             <Image
               src="/logo/mark.png"
               alt={SITE.name}
-              width={358}
-              height={407}
+              width={512}
+              height={512}
               priority
               className="h-9 w-auto"
             />
